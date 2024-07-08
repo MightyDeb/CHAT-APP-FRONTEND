@@ -3,13 +3,17 @@ import moment from 'moment';
 import React, { memo } from 'react'
 import { fileFormat } from '../../lib/features';
 import RenderContent from './RenderContent';
+import {motion} from 'framer-motion'
 
 const MessageComponent = ({message,user}) => {
   const {sender,content,attachments=[],createdAt}= message;
   const sameSender= sender?._id===user?._id
   const timeAgo= moment(createdAt).fromNow()
   return (
-    <div style={{
+    <motion.div 
+      initial={{opacity: 0, x: "-100%"}}
+      whileInView={{opacity: 1, x: 0}}
+    style={{
       alignSelf: sameSender?'flex-end':'flex-start',
       backgroundColor: 'white', color: 'black', borderRadius: '5px', padding: '0.5rem', width: 'fit-content', border: '0.1px solid black'
     }}>
@@ -29,7 +33,7 @@ const MessageComponent = ({message,user}) => {
         })
       }
       <Typography variant='caption' color={'text.secondary'} >{timeAgo}</Typography>
-    </div>
+    </motion.div>
   )
 }
 

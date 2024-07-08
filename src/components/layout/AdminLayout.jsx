@@ -3,6 +3,8 @@ import { Box, Drawer, Grid, IconButton, Stack, Typography, styled } from '@mui/m
 import React, { useState } from 'react'
 import { useLocation, Link as LinkComponent, Navigate } from 'react-router-dom'
 import { adminTabs } from '../../constants/route'
+import { useDispatch, useSelector } from 'react-redux'
+import { adminLogout } from '../../redux/thunks/admin'
 
 const Link= styled(LinkComponent)`
 text-decoration: none;  border-radius: 2rem;  
@@ -12,7 +14,11 @@ padding: 1rem 2rem;  color: black;
 
 const Sidebar=({w='100%'})=>{
   const location= useLocation()
-  const logoutHandler=()=>{}
+  const dispatch= useDispatch()
+
+  const logoutHandler=()=>{
+    dispatch(adminLogout())
+  }
   return(
     <Stack width={w} p={'3rem'} spacing={'3rem'}>
       <Typography variant='h5'>CHATTU</Typography>
@@ -45,9 +51,10 @@ const Sidebar=({w='100%'})=>{
   )
 }
 
-const isAdmin=true;
+
 
 const AdminLayout = ({children}) => {
+  const {isAdmin}= useSelector(state=> state.auth);
   const [isMobile,setIsMobile]=useState(false)
   const handleMobile=()=>{
     setIsMobile(prev=> !prev)

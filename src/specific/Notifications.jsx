@@ -1,16 +1,43 @@
 import React, { memo } from 'react'
-import {Avatar, Button, Dialog, DialogTitle, ListItem, Stack, Typography} from '@mui/material'
+import {Avatar, Button, Dialog, DialogTitle, ListItem, Skeleton, Stack, Typography} from '@mui/material'
 import { sampleNotifications } from '../constants/sampleData'
-const Notifications = () => {
-  const friendRequestHandler=({_id,accept})=>{
+import { useAcceptFriendRequestMutation, useGetNotificationsQuery } from '../redux/api/api'
+import { useAsyncMutation, useErrors } from '../hooks/hook'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsNotification } from '../redux/reducers/misc'
+import toast from 'react-hot-toast'
 
+const Notifications = () => {
+  const dispatch= useDispatch()
+  const {isNotification}= useSelector(state=> state.misc)
+
+  const {isLoading,data,error,isError}= useGetNotificationsQuery()
+
+  const [acceptRequest]= useAsyncMutation(useAcceptFriendRequestMutation)
+
+  const friendRequestHandler= async({_id,accept})=>{
+    dispatch(setIsNotification(false))
+    await acceptRequest("Processing Friend Request...",{requestId: _id, accept})
   }
+
+  const closeHandler =()=>{
+    dispatch(setIsNotification(false))
+  }
+  useErrors([{error,isError}])
+
   return (
-    <Dialog open>
+    <Dialog open={isNotification} onClose={closeHandler}>
       <Stack p={{xs:'1rem',sm:'2rem'}} maxWidth={'25rem'}>
         <DialogTitle>Notifications</DialogTitle>
-        { sampleNotifications.length>0?
-        sampleNotifications.map((i)=> <NotificationItem sender={i.sender} _id={i._id} handler={friendRequestHandler}/>): <Typography textAlign={'center'}>0 Notifications</Typography>}
+        {isLoading? <Skeleton/> : <>
+          {data?.allRequests.length>0? (
+            data?.allRequests?.map(({sender, _id})=>
+              <NotificationItem sender={sender}  _id={_id} handler={friendRequestHandler} key={_id} />
+            )
+          ) : <Typography textAlign={'center'}>0 notifications</Typography>
+        }
+        </>}
+        
       </Stack>
     </Dialog>
   )

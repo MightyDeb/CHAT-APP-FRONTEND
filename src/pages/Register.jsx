@@ -1,21 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, Button, Container, IconButton, Paper, Stack, TextField, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import {CameraAlt as Camera} from "@mui/icons-material"
 import { VisuallyHiddenInput } from '../components/styles/StyledComponents'
-import {useFileHandler, useInputValidation, useStrongPassword} from '6pp'
-import { userNameValidator } from '../utils/validator'
+import {useFileHandler, useInputValidation} from '6pp'
+import axios from 'axios'
+import { server } from '../constants/config'
+import { useDispatch } from 'react-redux'
+import { userExists } from '../redux/reducers/auth'
+import toast from 'react-hot-toast'
 
-const handleSignUp= (e)=>{
-  e.preventDefault()
-}
 
 const Register = () => {
+  const [isLoading,setIsLoading]= useState(false)
   const name= useInputValidation("")
-  const username= useInputValidation("", userNameValidator)
+  const username= useInputValidation("")
   const bio=useInputValidation("")
-  const password=useStrongPassword()
+  const password=useInputValidation("")
   const avatar= useFileHandler("single",2)
+  const dispatch= useDispatch()
+  const handleSignUp= async(e)=>{
+    setIsLoading(true)
+    e.preventDefault()
+    const formData= new FormData()
+    formData.append("avatar", avatar.file)
+    formData.append("name", name.value)
+    formData.append("bio", bio.value)
+    formData.append("username", username.value)
+    formData.append("password", password.value)
+    try {
+      const {data} = await axios.post(`${server}/api/v1/user/register`,formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      dispatch(userExists(data.user))
+      toast.success(data.message)
+    } catch (error) {
+      toast.error(error?.response?.data?.message || 'Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <Container component={'main'} maxWidth='xs' sx={{
       height: '100vh',
@@ -73,7 +100,7 @@ const Register = () => {
           }
           <TextField fullWidth label='Bio' margin='normal' variant='outlined' value={bio.value} onChange={bio.changeHandler}/>
           <br/>
-          <Button sx={{margin:'1rem'}} variant='contained' color='primary' type='submit'>Register</Button>
+          <Button sx={{margin:'1rem'}} variant='contained' color='primary' type='submit' disabled={isLoading}>Register</Button>
           <p>Already registered?  
           <span><Link to='/login'> Sign In </Link></span> </p>
           

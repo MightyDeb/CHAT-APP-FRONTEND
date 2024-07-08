@@ -1,36 +1,58 @@
-import React, { useState } from 'react'
-import { Button, Dialog, DialogTitle, Stack, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Button, Dialog, DialogTitle, Skeleton, Stack, Typography } from '@mui/material'
 import { sampleUsers } from '../../constants/sampleData'
+import toast from 'react-hot-toast'
 import UserItem from '../shared/UserItem'
+import { useAsyncMutation, useErrors } from '../../hooks/hook'
+import { useAddGroupMembersMutation, useAvailableFriendsQuery } from '../../redux/api/api'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsAddMember } from '../../redux/reducers/misc'
 
 
-const AddMemberDialog = ({addMember,isLoadingAddMember,chatId}) => {
-  const [members,setMembers]= useState(sampleUsers)
+const AddMemberDialog = ({chatId}) => {
+  const dispatch= useDispatch()
+  const {isAddMember}= useSelector(state=> state.misc)
+  const {isLoading,data,isError,error}= useAvailableFriendsQuery(chatId)
+  
+  const [addMembers,isLoadingAddMembers]= useAsyncMutation(useAddGroupMembersMutation)
+  
   const [selectedMembers,setSelectedMembers]= useState([])
+  
+  const errors= [{isError, error}]
+  useEffect(()=>{
+    errors.forEach(({isError,error})=>{
+      if(isError){
+        return ()=> toast.error(error?.data?.message || 'Something went wrong')
+      }
+    }) 
+  },[errors])
+
   const selectMemberHandler=(id)=>{
     setSelectedMembers(prev=> prev.includes(id)? prev.filter((i)=> i!==id) :[...prev,id])
   }
   const addMemberSubmitHandler=()=>{
+    addMembers("Adding Mmembers...",{members: selectedMembers,chatId})
     closeHandler()
   }
   const closeHandler=()=>{
     setSelectedMembers([])
-    setMembers([])
+    dispatch(setIsAddMember(false))
   }
   return (
-    <Dialog open onClose={closeHandler}>
+    <Dialog open={isAddMember} onClose={closeHandler}>
       <Stack p={'2rem'} width={'20rem'} spacing={'2rem'}>
         <DialogTitle textAlign={'center'}>Add Member</DialogTitle>
         <Stack spacing={'1rem'}>
-          { members.length>0 ? 
-            members.map(i=>
+          { isLoading ? <Skeleton/> : 
+          data?.friends?.length>0 ? 
+            data?.friends?.map(i=>
               <UserItem key={i._id} user={i} handler={selectMemberHandler} isAdded={selectedMembers.includes(i._id)}/>
             ) : <Typography textAlign={'center'}>No Friends</Typography>
           }
         </Stack>
         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems={'center'}>
           <Button color='error' onClick={closeHandler}>Cancel</Button>
-          <Button onClick={addMemberSubmitHandler} variant='contained' disabled={isLoadingAddMember}>Submit Changes</Button>
+          <Button onClick={addMemberSubmitHandler} variant='contained' disabled={isLoadingAddMembers}>Submit Changes</Button>
         </Stack>
       </Stack>
     </Dialog>

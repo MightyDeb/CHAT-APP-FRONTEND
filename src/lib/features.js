@@ -14,7 +14,12 @@ export const fileFormat =(url="")=>{
   return "file";
 }
 
-export const transformImage= (url="",width=100)=>url
+//  /dpr_auto/w_200 gets u image in 200px
+export const transformImage= (url="",width=100)=>{
+  if(Array.isArray(url)) return 
+  const newUrl= url.replace("upload/", `upload/dpr_auto/w_${width}/`)
+  return newUrl
+}
 
 export const getLast7Days = ()=>{
   const currentDate= moment()
@@ -24,4 +29,11 @@ export const getLast7Days = ()=>{
     last7Days.unshift(dayDate)
   }
   return last7Days
+}
+
+export const getOrSaveFromStorage= ({key,value,get})=>{
+  if(get)  
+    return localStorage.getItem(key) ? JSON.parse(localStorage.getItem(key)) : null
+  else
+    localStorage.setItem(key, JSON.stringify(value))
 }
