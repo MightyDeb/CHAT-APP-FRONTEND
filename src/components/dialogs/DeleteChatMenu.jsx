@@ -46,10 +46,12 @@ const DeleteChatDialog = ({dispatch,deleteOptionAnchor}) => {
         {
           selectedDeleteChat.groupChat? (
             <> <ExitToApp/>
-              <Typography>Leave Group</Typography>
+              <Typography>
+                <span className='nes-text' style={{fontSize: '0.5rem'}}>Leave Group</span></Typography>
             </>
           ): ( <> <Delete/>
-              <Typography>Unfriend</Typography>
+              <Typography>
+              <span className='nes-text' style={{fontSize: '0.5rem'}}>Unfriend</span></Typography>
               </> )
         }
       </Stack>

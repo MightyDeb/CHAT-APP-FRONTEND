@@ -54,7 +54,11 @@ const SearchDialog = () => {
   return (
     <Dialog open={isSearch} onClose={searchCloseHandler}>
       <Stack p={'2rem'} direction={'column'} width={'25rem'}>
-        <DialogTitle textAlign={'center'}>Find People</DialogTitle>
+        <DialogTitle textAlign={'center'}>
+          <p className='nes-text is-primary' style={{
+            textDecoration: 'underline'
+          }}>Find People</p>
+          </DialogTitle>
         <TextField label="" value={search.value} onChange={search.changeHandler} variant='outlined' size='small' InputProps={{
           startAdornment: (
             <InputAdornment position='start'>

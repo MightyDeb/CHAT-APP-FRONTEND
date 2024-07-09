@@ -19,19 +19,27 @@ const ChatItem = ({
         gap:'1rem',
         alignItems: 'center',
         padding: '1rem',
-        backgroundColor: sameSender? 'black': 'unset',
+        backgroundColor: sameSender? '#A0502D': '#CCE7E4',
         color: sameSender? 'white': 'unset',
         position: 'relative',
       }}>
         <AvatarCard avatar={avatar}/>
         <Stack>
-          <Typography>{name}</Typography>
+          <Typography>
+            <p style={{
+              fontSize: '0.7rem'
+            }}>{name}</p>
+          </Typography>
           { newMessageAlert && 
-          <Typography>{newMessageAlert.count} New Messages</Typography>}
+          <Typography>
+            <p style={{
+              fontSize: '0.7rem'
+            }}>{newMessageAlert.count} New Messages</p>
+            </Typography>}
         </Stack>
         {isOnline && 
         <Box sx={{
-          width:'10px',height:'10px',borderRadius:'50%',backgroundColor:'green',position:'absolute',top:'50%',right:'1rem',transform:'translateY(-50%)'}} />}
+          width:'10px',height:'10px',borderRadius:'50%',backgroundColor: 'green',position:'absolute',top:'50%',right:'1rem',transform:'translateY(-50%)'}} />}
       </motion.div>
     </Link>
   )

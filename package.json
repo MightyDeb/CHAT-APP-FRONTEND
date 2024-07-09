@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@fontsource/press-start-2p": "^5.0.20",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
     "@mui/x-data-grid": "^7.8.0",
@@ -18,6 +19,7 @@
     "cors": "^2.8.5",
     "framer-motion": "^11.0.3",
     "moment": "^2.30.1",
+    "nes.css": "^2.3.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",

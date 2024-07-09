@@ -21,7 +21,9 @@ export const LayoutLoader= ()=>{
   )
 }
 export const TypingLoader= ()=>{
-  return <Stack spacing={'0.5rem'} direction={'row'} padding={'0.5rem'} justifyContent={'center'} >
+  return <Stack spacing={'0.5rem'} direction={'row'} padding={'0.5rem'} justifyContent={'center'} sx={{
+    zIndex: '11'
+  }}>
     <BouncingSkeleton variant='circular' width={15} height={15} style={{
       animationDelay: "0.1s"
     }} />

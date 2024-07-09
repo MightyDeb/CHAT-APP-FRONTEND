@@ -4,10 +4,15 @@ import React from 'react'
 const ConfirmDeleteDialog = ({open,handleClose,deleteHandler}) => {
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Confirm Delete</DialogTitle>
+      <DialogTitle>
+        <h5 className='nes-text is-primary' style={{
+          textDecoration: 'underline'
+        }}>Confirm Delete</h5>
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete this group?
+        <span className='nes-text' style={{fontSize: '0.5rem'}}>Are you sure you want to delete this group?</span>
+          
         </DialogContentText>
       </DialogContent>
       <DialogActions >

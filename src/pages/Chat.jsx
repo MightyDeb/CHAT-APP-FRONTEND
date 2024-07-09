@@ -1,4 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import chatBg from '../constants/chatBg.jpg'
 import AppLayout from '../components/layout/AppLayout'
 import { IconButton, Skeleton, Stack } from '@mui/material'
 import { AttachFile, Send } from '@mui/icons-material'
@@ -137,8 +138,9 @@ const Chat = ({chatId, user}) => {
   
   return chatDetails.isLoading ? <Skeleton/> : (
     <Fragment>
-      <Stack ref={containerRef} boxsizzing={'border-box'} padding={'1rem'} spacing={'1rem'} bgcolor={'rgba(247,247,247,0.7)'} height={'90%'} sx={{
-        overflowX: 'hidden', overflowY: 'auto'
+      <Stack ref={containerRef} boxsizzing={'border-box'} padding={'1rem'} spacing={'1rem'} bgcolor={'white'} height={'90%'} sx={{
+        overflowX: 'hidden', overflowY: 'auto',
+       backgroundImage: `url(${chatBg})`, backgroundRepeat: 'no-repeat' ,backgroundColor: 'skyblue'
       }}>
         {
           allMessages.map(i=> <MessageComponent key={i._id} message={i} user={user}/>)

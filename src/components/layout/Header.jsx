@@ -1,6 +1,7 @@
 import { AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
-import { orange } from '@mui/material/colors'
+import "@fontsource/press-start-2p"
 import React, {Suspense, lazy, useCallback, useEffect, useState} from 'react'
+import navLogo from '../../constants/navlogo.png'
 import { Add, Group, Logout, Menu, Notifications, Search } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -17,7 +18,11 @@ const SearchDialog= lazy(()=> import('../../specific/Search'))
 const NotificationDialog= lazy(()=> import('../../specific/Notifications'))
 const NewGroupDialog= lazy(()=> import('../../specific/NewGroup'))
 
+
+
+
 const Header = () => {
+  
   const navigate= useNavigate()
   const dispatch= useDispatch()
   const socket= getSocket()
@@ -65,14 +70,22 @@ const Header = () => {
     <div>
       <Box sx={{flexGrow:1}} height={'4rem'}>
         <AppBar position='static' sx={{
-          bgcolor: '#ea7070',
+          bgcolor: '#2E8B57',
         }}>
           <Toolbar >
             <Typography variant='h6' sx={{
-              display: {xs: 'none', sm: 'block'}
-            }}>Chattu</Typography>
+              display: {xs: 'none', sm: 'block'},
+            }}  >
+              <h4 className="nes-text" >
+                Chit_Chat
+            </h4>
+            </Typography>
             <Box sx={{display:{xs: 'block', sm: 'none'}}}>
-              <IconButton color='inherit' onClick={handleMobile}><Menu/></IconButton>
+              <IconButton color='inherit' onClick={handleMobile}>
+                <img src={navLogo} width={40} style={{
+                  borderRadius: '50%', cursor: 'pointer', border: '1px solid white'
+                }}/>
+              </IconButton>
             </Box>
             <Box sx={{flexGrow: 1,}}/>
             <Box>

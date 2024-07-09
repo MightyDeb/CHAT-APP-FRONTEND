@@ -49,9 +49,13 @@ const NewGroup = () => {
   return (
     <Dialog open={isNewGroup} onClose={closeHandler}>
       <Stack p={{xs:'1rem',sm:'3rem'}} width={'25rem'} spacing={'2rem'}>
-        <DialogTitle textAlign={'center'} variant='h4'>New Group</DialogTitle>
+        <DialogTitle textAlign={'center'} variant='h4'>
+          <h6 className='nes-text is-primary' style={{
+            textDecoration: 'underline'
+          }}>New Group</h6></DialogTitle>
         <TextField label="Group Name" value={groupName.value} onChange={groupName.changeHandler}/>
-        <Typography variant='body1'>Members</Typography>
+        <Typography variant='body1'>
+        <span className='nes-text'>MEMBERS</span></Typography>
         <Stack>
           { isLoading ? <Skeleton/> : 
             data?.friends?.map((i)=>
@@ -59,8 +63,9 @@ const NewGroup = () => {
           )}
         </Stack>
         <Stack direction={'row'} justifyContent={'space-evenly'}>
-          <Button variant='outlined' color='error' size='large' onClick={closeHandler}>Cancel</Button>
-          <Button variant='contained' size='large' onClick={submitHandler} disabled={isLoadingNewGroup}>Create</Button>
+          <Button variant='outlined' color='error' size='large' onClick={closeHandler}>
+            <span className='nes-text is-error'>Cancel</span></Button>
+          <button type="button" className="nes-btn is-primary" onClick={submitHandler} disabled={isLoadingNewGroup} >Create</button>
         </Stack>
       </Stack>
     </Dialog>

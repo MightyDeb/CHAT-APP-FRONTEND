@@ -11,7 +11,10 @@ const UserItem = ({user,handler,handlerIsLoading,isAdded=false,styling={}}) => {
       <Stack direction={'row'} alignItems={'center'} spacing={'1rem'} width={'100%'} {...styling}>
         <Avatar src={transformImage(avatar)} />
         <Typography variant='body1' sx={{
-          flexGlow: 1, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'}}>{name}</Typography>
+          flexGlow: 1, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'}}>
+            <span className='nes-text' style={{
+              fontSize: '0.5rem'
+            }}>{name}</span></Typography>
         <IconButton size='small' sx={{
           bgcolor: isAdded?'error.main':'primary.main', color: 'white', '&:hover':{ bgcolor: isAdded?'error.dark':'primary.dark' },
         }} onClick={()=> handler(_id)} disabled={handlerIsLoading}>

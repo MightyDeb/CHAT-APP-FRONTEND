@@ -91,8 +91,10 @@ const AppLayout = ()=>(WrappedComponent)=> {
           <Grid item sm={4} md={3} sx={{
             display: {xs:'none',sm:'block'},
             }} height={'90.5vh'} >
-              {isLoading ? (<Skeleton/>) : 
+              {isLoading ? (<Skeleton/>) :
+              <> 
             <ChatList chats={data?.chats} chatId={chatId} newMessagesAlert={newMessagesAlert} handleDeleteChat={handleDeleteChat} />
+             </>
              }
           </Grid>
           <Grid item xs={12} sm={8} md={5} lg={6}height={'90.5vh'} >
@@ -100,7 +102,7 @@ const AppLayout = ()=>(WrappedComponent)=> {
           </Grid>
           <Grid item md={4} lg={3} sx={{
             display: {xs:'none',md:'block'},
-            padding:'2rem', bgcolor: 'rgb(0,0,0.85)'
+            padding:'2rem', bgcolor: '#DBC03A', borderLeft: '5px solid black'
           }} height={'90.5vh'} >
             <Profile user={user}/>
           </Grid>

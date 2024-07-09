@@ -41,18 +41,21 @@ const AddMemberDialog = ({chatId}) => {
   return (
     <Dialog open={isAddMember} onClose={closeHandler}>
       <Stack p={'2rem'} width={'20rem'} spacing={'2rem'}>
-        <DialogTitle textAlign={'center'}>Add Member</DialogTitle>
+        <DialogTitle textAlign={'center'}><h5 className='nes-text is-primary' style={{
+          textDecoration: 'underline'
+        }}>Add Member</h5></DialogTitle>
         <Stack spacing={'1rem'}>
           { isLoading ? <Skeleton/> : 
           data?.friends?.length>0 ? 
             data?.friends?.map(i=>
               <UserItem key={i._id} user={i} handler={selectMemberHandler} isAdded={selectedMembers.includes(i._id)}/>
-            ) : <Typography textAlign={'center'}>No Friends</Typography>
+            ) : <Typography textAlign={'center'}>
+              <span className='nes-text' style={{fontSize: '0.5rem'}}>No Friends</span></Typography>
           }
         </Stack>
         <Stack direction={'row'} justifyContent={'space-evenly'} alignItems={'center'}>
           <Button color='error' onClick={closeHandler}>Cancel</Button>
-          <Button onClick={addMemberSubmitHandler} variant='contained' disabled={isLoadingAddMembers}>Submit Changes</Button>
+          <Button onClick={addMemberSubmitHandler}  disabled={isLoadingAddMembers}>Submit Changes</Button>
         </Stack>
       </Stack>
     </Dialog>

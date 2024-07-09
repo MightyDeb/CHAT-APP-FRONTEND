@@ -1,6 +1,7 @@
 import { Add, Delete, Done, Edit, KeyboardBackspace, Menu } from '@mui/icons-material'
 import { Grid, IconButton, Tooltip, Box, Drawer, Stack, Typography, TextField, Button, Backdrop, CircularProgress } from '@mui/material'
 import React, { Suspense, lazy, memo, useEffect, useState } from 'react'
+import groupBg from '../constants/groupBg.jpg'
 import { useNavigate,useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Link } from '../components/styles/StyledComponents'
@@ -119,34 +120,43 @@ const Groups = () => {
   const GroupName= <>
   <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={'1rem'} padding={'3rem'}>
     { isEdit ? (<>
-      <TextField value={groupNameUpdatedValue} onChange={e=> setGroupNameUpdatedValue(e.target.value)}/>
+      <textarea value={groupNameUpdatedValue} onChange={e=> setGroupNameUpdatedValue(e.target.value)} className="nes-textarea"></textarea>
       <IconButton onClick={updateGroupName} disabled={isLoadingGroupName}><Done/></IconButton>
     </>) 
     : (<>
-      <Typography variant='h4'>{groupName}</Typography>
+      <Typography variant='h4'>
+        <span className='nes-text' style={{
+          fontSize: '1.6rem'
+        }}>{groupName}</span></Typography>
       <IconButton onClick={()=> setIsEdit(true)} disabled={isLoadingGroupName}><Edit/></IconButton>
     </>) }    
   </Stack>
   </>
   const ButtonGroup= <Stack direction={{sm: 'row' ,xs: 'column-reverse'}} spacing={'1rem'} p={{ xs: '0', sm: '1rem', md: '1rem 4rem'}}>
-    <Button size='large' color='error' startIcon={<Delete/>} onClick={openConfirmDeleteHandler}>Delete Group</Button>
-    <Button size='large' variant='contained' startIcon={<Add/>} onClick={openAddMemberHandler}>Add Member</Button>
+    <button type="button" class="nes-btn is-error" onClick={openConfirmDeleteHandler}>
+      <Delete/> Delete Group</button>
+    <button type="button" class="nes-btn is-success" onClick={openAddMemberHandler}>
+      <Add/> Add Member
+    </button>
+
   </Stack>
   return myGroups.isLoading? <LayoutLoader/> :(
     <Grid container height={'100vh'}>
       <Grid item sx={{
-        display: { xs: 'none', sm: 'block'}, backgroundImage: 'linear-gradient(rgb(255 225 209), rgb(249 159 159))'
+        display: { xs: 'none', sm: 'block'}, backgroundColor: '#98138B'
       }} sm={4} >
         <GroupList myGroups={myGroups?.data?.groups} chatId={chatId}/>
       </Grid>
       <Grid item xs={12} sm={8} sx={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', padding: '1rem 3rem'
+        display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', padding: '1rem 3rem', backgroundImage: `url(${groupBg})`
       }}> 
         {IconBtns}
         {groupName && 
         <>
           {GroupName}
-          <Typography margin={'2rem'} alignSelf={'flex-start'} variant='body1'>Members</Typography>
+          <Typography margin={'2rem'} alignSelf={'flex-start'} variant='body1'>
+            <p className='nes-text'>MEMBERS</p>
+          </Typography>
           <Stack maxWidth={'45rem'} width={'100%'} boxsizzing={'border-box'} padding={{ sm: '1rem', xs: '0', md: '1rem 4rem'}} spacing={'2rem'} height={'50vh'} overflow={'auto'}>
             { isLoadingRemoveMember ?            <CircularProgress/> :
               members.map(i=>
@@ -175,7 +185,7 @@ const Groups = () => {
 }
 
 const GroupList=({w='100%', myGroups=[],chatId})=>{
-  return <Stack width={w} sx={{backgroundImage: 'linear-gradient(rgb(255 225 209), rgb(249 159 159))', height: '100vh'}}>
+  return <Stack width={w} sx={{backgroundColor: '#EBA2E4', height: '100vh'}}>
     {
       myGroups.length>0 ? myGroups.map((group)=>
         <GroupListItem group={group} chatId={chatId} key={group._id} />
@@ -193,7 +203,8 @@ const GroupListItem= memo(({group, chatId})=>{
   }>
     <Stack direction={'row'} spacing={'1rem'} alignItems={'center'}>
       <AvatarCard avatar={avatar}/>
-      <Typography>{name}</Typography>
+      <Typography>
+        <p className='nes-text' style={{fontSize: '0.7rem',  }}>{name}</p></Typography>
     </Stack>
   </Link>)
 })

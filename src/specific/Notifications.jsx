@@ -28,7 +28,10 @@ const Notifications = () => {
   return (
     <Dialog open={isNotification} onClose={closeHandler}>
       <Stack p={{xs:'1rem',sm:'2rem'}} maxWidth={'25rem'}>
-        <DialogTitle>Notifications</DialogTitle>
+        <DialogTitle>
+          <h5 className='nes-text is-primary' style={{
+            textDecoration: 'underline'
+          }}>Notifications</h5></DialogTitle>
         {isLoading? <Skeleton/> : <>
           {data?.allRequests.length>0? (
             data?.allRequests?.map(({sender, _id})=>
