@@ -142,8 +142,14 @@ const api= createApi({
       }),
       invalidatesTags: ['Chat']
     }),
+    Communities: builder.query({
+      query: ()=>({
+        url: "chat/community", credentials: 'include'
+      }),
+      providesTags: ["Chat"]
+    })
   })
 })
 
 export default api
-export const {useMyChatsQuery,useLazySearchUserQuery,useSendFriendRequestMutation,useGetNotificationsQuery,useAcceptFriendRequestMutation,useChatDetailsQuery,useGetMessagesQuery,useSendAttachmentsMutation,useMyGroupsQuery,useAvailableFriendsQuery,useNewGroupMutation,useRenameGroupMutation,useRemoveGroupMemberMutation,useAddGroupMembersMutation,useDeleteChatMutation,useLeaveGroupMutation} = api
+export const {useMyChatsQuery,useLazySearchUserQuery,useSendFriendRequestMutation,useGetNotificationsQuery,useAcceptFriendRequestMutation,useChatDetailsQuery,useGetMessagesQuery,useSendAttachmentsMutation,useMyGroupsQuery,useAvailableFriendsQuery,useNewGroupMutation,useRenameGroupMutation,useRemoveGroupMemberMutation,useAddGroupMembersMutation,useDeleteChatMutation,useLeaveGroupMutation,useCommunitiesQuery} = api

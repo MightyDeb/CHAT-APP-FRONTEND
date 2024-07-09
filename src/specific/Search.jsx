@@ -53,7 +53,7 @@ const SearchDialog = () => {
 
   return (
     <Dialog open={isSearch} onClose={searchCloseHandler}>
-      <Stack p={'2rem'} direction={'column'} width={'25rem'}>
+      <Stack p={'2rem'} direction={'column'} width={'fit-content'}>
         <DialogTitle textAlign={'center'}>
           <p className='nes-text is-primary' style={{
             textDecoration: 'underline'

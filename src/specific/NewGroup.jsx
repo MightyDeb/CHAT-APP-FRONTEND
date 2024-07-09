@@ -48,7 +48,7 @@ const NewGroup = () => {
   }
   return (
     <Dialog open={isNewGroup} onClose={closeHandler}>
-      <Stack p={{xs:'1rem',sm:'3rem'}} width={'25rem'} spacing={'2rem'}>
+      <Stack p={{xs:'1rem',sm:'3rem'}} width={'fit-content'} spacing={'2rem'}>
         <DialogTitle textAlign={'center'} variant='h4'>
           <h6 className='nes-text is-primary' style={{
             textDecoration: 'underline'

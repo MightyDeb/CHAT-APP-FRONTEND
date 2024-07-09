@@ -2,7 +2,7 @@ import { AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography 
 import "@fontsource/press-start-2p"
 import React, {Suspense, lazy, useCallback, useEffect, useState} from 'react'
 import navLogo from '../../constants/navlogo.png'
-import { Add, Group, Logout, Menu, Notifications, Search } from '@mui/icons-material'
+import { Add, Edit, Group, ImportContacts, Logout, Menu, Notifications, Search } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { server } from '../../constants/config'
@@ -46,15 +46,11 @@ const Header = () => {
   }
   const navigateToGroup=()=>{navigate("/groups")}
 
-  // const newRequestHandler= useCallback(()=>{
-  //   dispatch(incrementNotifications())
-  // },[dispatch])
-  // useEffect(()=>{
-  //   socket.on(NEW_REQUEST, newRequestHandler)
-  //   return ()=>{
-  //     socket.off(NEW_REQUEST, newRequestHandler)
-  //   }
-  // },[socket,newRequestHandler])
+
+  const getAllCommunitiesHandler=()=>{
+    navigate("/communities")
+  }
+  const editProfileHandler=()=>{}
 
   const logoutHandler= async()=>{
     try {
@@ -82,9 +78,8 @@ const Header = () => {
             </Typography>
             <Box sx={{display:{xs: 'block', sm: 'none'}}}>
               <IconButton color='inherit' onClick={handleMobile}>
-                <img src={navLogo} width={40} style={{
-                  borderRadius: '50%', cursor: 'pointer', border: '1px solid white'
-                }}/>
+                <Menu/>
+
               </IconButton>
             </Box>
             <Box sx={{flexGrow: 1,}}/>
@@ -105,6 +100,9 @@ const Header = () => {
             </Tooltip> 
             <Tooltip title='Manage Groups'>
             <IconButton color='inherit' size="large" onClick={navigateToGroup}><Group/></IconButton>
+            </Tooltip>
+            <Tooltip title='All Communities'>
+              <IconButton color='inherit' size='large' onClick={getAllCommunitiesHandler}><ImportContacts/></IconButton>
             </Tooltip>
             {
               isNotification && 

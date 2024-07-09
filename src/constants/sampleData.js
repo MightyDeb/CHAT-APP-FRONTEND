@@ -150,6 +150,28 @@ export const dashboardData={
       groupChat: true,
       createdAt: "2024-02-12T10:41:30.630Z"
     }
-  ]
+  ],
 
 }
+
+export const   sampleCommunity=[{
+  avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+  name:'John Doe',
+  _id:'1',
+  groupChat: true,
+  creator: {
+    _id: 'ddld',
+    isAdmin: true
+  },
+},
+{
+avatar:["https://www.w3schools.com/howto/img_avatar.png"],
+name:'Jane Doe',
+_id:'2',
+groupChat: false,
+creator: {
+  _id: 'ddldj',
+  isAdmin: true
+},
+},
+]

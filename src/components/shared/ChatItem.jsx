@@ -3,11 +3,16 @@ import { Link } from '../styles/StyledComponents'
 import { Box, Stack, Typography } from '@mui/material'
 import AvatarCard from './AvatarCard'
 import {motion} from 'framer-motion'
+import { Verified } from '@mui/icons-material'
 //onContextMenu---> right click
 
+
 const ChatItem = ({
-  avatar=[],name,_id,groupChat=false,sameSender,isOnline,newMessageAlert,index=0,handleDeleteChat
+  avatar=[],name,_id,groupChat=false,sameSender,isAdmin=false,isOnline,newMessageAlert,index=0,handleDeleteChat
 }) => {
+  const openProfileDialog=()=>{
+
+  }
   return (
     <Link sx={{padding: '0'}} to={`/chat/${_id}`} onContextMenu={(e)=>handleDeleteChat(e,_id,groupChat)}>
       <motion.div 
@@ -23,12 +28,13 @@ const ChatItem = ({
         color: sameSender? 'white': 'unset',
         position: 'relative',
       }}>
-        <AvatarCard avatar={avatar}/>
+        <AvatarCard avatar={avatar} onClick={openProfileDialog}/>
         <Stack>
           <Typography>
             <p style={{
               fontSize: '0.7rem'
             }}>{name}</p>
+            {isAdmin && <Verified/>}
           </Typography>
           { newMessageAlert && 
           <Typography>
