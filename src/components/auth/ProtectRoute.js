@@ -9,3 +9,6 @@ const ProtectRoute = ({children, user, redirect='/login'}) => {
 }
 
 export default ProtectRoute
+
+// React Navigate helps to navigate between sites.
+//React Outlet is a component provided by React Router that serves as a placeholder for child routes within a parent route. It is a safe practice.

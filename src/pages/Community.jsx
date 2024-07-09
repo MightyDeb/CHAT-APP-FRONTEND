@@ -1,8 +1,7 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Container, Grid, Paper, Skeleton, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { sampleCommunity } from '../constants/sampleData'
 
-import grp5 from '../constants/groupImages/grp5.jpg'
+import grp5 from '../constants/Images/community.jpg'
 import { useDispatch } from 'react-redux'
 import { useCommunitiesQuery } from '../redux/api/api'
 import toast from 'react-hot-toast'

@@ -12,7 +12,6 @@ const RenderContent = (file,url) => {
       return <audio src={url} preload='none' controls />
      default:
       return <FileOpen/>
-
   }
 }
 

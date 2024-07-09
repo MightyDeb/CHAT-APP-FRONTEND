@@ -1,4 +1,4 @@
-import { keyframes, Skeleton, styled, Typography } from "@mui/material"
+import { keyframes, Skeleton, styled } from "@mui/material"
 import {Link as LinkComponent} from 'react-router-dom'
 
 export const VisuallyHiddenInput = styled('input')({
@@ -12,7 +12,6 @@ export const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 })
-
 
 export const Link = styled(LinkComponent)`
   text-decoration: none;
@@ -50,15 +49,14 @@ export const CurveButton= styled('button')`
   &:hover{
    background-color: rgba(0,0,0,0.8) }`
 
-
 const bounceAnimation = keyframes`
   0% {transform: scale(1)}
   50% {transform: scale(1.5)}
   100% {transform: scale(1)}`
+
 export const BouncingSkeleton= styled(Skeleton)(()=>  ({
     animation: `${bounceAnimation} 1s infinite`
   })
 )
 
-export const NesTypography= styled(Typography)`
-  `
+//customisable MUI components

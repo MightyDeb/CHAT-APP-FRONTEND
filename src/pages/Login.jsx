@@ -8,7 +8,7 @@ import { server } from '../constants/config'
 import { useDispatch } from 'react-redux'
 import { userExists } from '../redux/reducers/auth'
 import toast from 'react-hot-toast'
-
+import registerBg from '../constants/Images/registerBg.gif'
 
 
 
@@ -39,22 +39,30 @@ const Login = () => {
     }
   }
   return (
+    <div style={{ 
+      backgroundImage: `url(${registerBg})`, backgroundRepeat: 'repeat'
+    }}>
     <Container component={'main'} maxWidth='xs' sx={{
       height: '100vh',
+      padding: '1rem',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
     }}>
       <Paper elevation={3} sx={{
         padding: 4, display: 'flex', 
-        flexDirection: 'column', alignItems: 'center'
+        flexDirection: 'column', alignItems: 'center', backgroundColor: '#E9E6E5'
       }}>
-        <Typography variant='h5'>Login</Typography>
+        <h2 className='nes-text'>
+          LOGIN
+        </h2>
+        <progress class="nes-progress is-pattern" value="70" max="100"></progress>
         <form style={{
           width: '100%',
           marginTop: '1rem'
         }} onSubmit={handleLogin}>
-          <TextField required fullWidth label='Username' margin='normal' variant='outlined' value={username.value} onChange={username.changeHandler}/>
+          <label for="username_field">Username</label>
+          <input required type="text" id="username_field" className="nes-input" value={username.value} onChange={username.changeHandler}/>
           {
             username.error && (
               <Typography color='error' variant='caption'>
@@ -62,7 +70,8 @@ const Login = () => {
               </Typography>
             )
           }
-          <TextField required fullWidth label='Password' type='password' margin='normal' variant='outlined' value={password.value} onChange={password.changeHandler}/>
+          <label for="password_field">Password</label>
+          <input required type="password" id="password_field" className="nes-input"  value={password.value} onChange={password.changeHandler} />
           {
             password.error && (
               <Typography color='error' variant='caption'>
@@ -70,13 +79,17 @@ const Login = () => {
               </Typography>
             )
           }
-          <br/>
-          <Button sx={{margin:'1rem'}} variant='contained' color='primary' type='submit' disabled={isLoading}>Login</Button>
-          <p>Not registered already?  
-          <span><Link to='/register'> Regsiter</Link></span> </p>
+          <button type="submit" class="nes-btn is-primary" disabled={isLoading} style={{
+            marginTop: '1.5rem'
+          }}>Login</button>
+          <p style={{marginTop: '0.5rem'}}>Not registered already?  
+          <span style={{
+            fontSize: '0.7rem'
+          }}><Link to='/register'> Regsiter</Link></span> </p>
         </form>
       </Paper>
     </Container>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import chatBg from '../constants/chatBg.jpg'
+import chatBg from '../constants/Images/chatBg.jpg'
 import AppLayout from '../components/layout/AppLayout'
 import { IconButton, Skeleton, Stack } from '@mui/material'
 import { AttachFile, Send } from '@mui/icons-material'

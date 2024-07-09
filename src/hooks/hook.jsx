@@ -15,7 +15,7 @@ const useErrors = (errors= [])=>{
   },[errors])
 }
 
-
+//hook to manage RTK Mutate Queries 
 const useAsyncMutation= (mutationHook)=>{
   const [isLoading, setIsLoading]= useState(false)
   const [data,setData]= useState(null)
@@ -40,6 +40,7 @@ const useAsyncMutation= (mutationHook)=>{
   return [executeMutation,isLoading,data]
 }
 
+//hook to handle socket events and listeners
 const useSocketEvents= (socket,handlers)=>{
   useEffect(()=>{
     Object.entries(handlers).forEach(([event,handler])=>{

@@ -4,8 +4,8 @@ import React, { memo } from 'react'
 import { transformImage } from '../../lib/features'
 
 const UserItem = ({user,handler,handlerIsLoading,isAdded=false,styling={}}) => {
+  //destructuring data from user
   const {name,_id,avatar}=user
-  
   return (
     <ListItem>
       <Stack direction={'row'} alignItems={'center'} spacing={'1rem'} width={'100%'} {...styling}>
@@ -14,11 +14,13 @@ const UserItem = ({user,handler,handlerIsLoading,isAdded=false,styling={}}) => {
           flexGlow: 1, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%'}}>
             <span className='nes-text' style={{
               fontSize: '0.5rem'
-            }}>{name}</span></Typography>
+            }}>
+              {name}
+            </span>
+        </Typography>
         <IconButton size='small' sx={{
-          bgcolor: isAdded?'error.main':'primary.main', color: 'white', '&:hover':{ bgcolor: isAdded?'error.dark':'primary.dark' },
-        }} onClick={()=> handler(_id)} disabled={handlerIsLoading}>
-          {isAdded? <Remove/> : <Add/>}
+          bgcolor: isAdded? 'error.main':'primary.main', color: 'white', '&:hover':{ bgcolor: isAdded? 'error.dark':'primary.dark' },}} onClick={()=> handler(_id)} disabled={handlerIsLoading}>
+            {isAdded? <Remove/> : <Add/>}
         </IconButton>
       </Stack>
     </ListItem>
@@ -26,3 +28,4 @@ const UserItem = ({user,handler,handlerIsLoading,isAdded=false,styling={}}) => {
 }
 
 export default memo(UserItem)
+//Using memo will cause React to skip rendering a component if its props have not changed. It is a good practice.

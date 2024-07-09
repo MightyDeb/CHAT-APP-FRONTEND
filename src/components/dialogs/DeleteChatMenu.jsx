@@ -1,20 +1,25 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, Stack, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsDeleteMenu } from '../../redux/reducers/misc'
 import { Delete, ExitToApp } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import { useAsyncMutation } from '../../hooks/hook'
 import { useDeleteChatMutation, useLeaveGroupMutation } from '../../redux/api/api'
 
+//DIALOG THAT UNFRIENDS USER OR LEAVES GROUP 
 
-
-const DeleteChatDialog = ({dispatch,deleteOptionAnchor}) => {
+const DeleteChatDialog = ({deleteOptionAnchor}) => {
+  //utility variables 
+  const dispatch= useDispatch()
   const navigate= useNavigate()
+  //accessing redux state
   const {isDeleteMenu,selectedDeleteChat}= useSelector(state=> state.misc)
+  //rtk queries (_ for ignoring return values)
   const [deleteChat, _,deleteChatData]= useAsyncMutation(useDeleteChatMutation)
   const [leaveGroup, __,leaveGroupData]= useAsyncMutation(useLeaveGroupMutation)
   const chatId= selectedDeleteChat.chatId
+
   const closeHandler=()=>{
     dispatch(setIsDeleteMenu(false))
     deleteOptionAnchor.current= null
@@ -29,11 +34,13 @@ const DeleteChatDialog = ({dispatch,deleteOptionAnchor}) => {
     deleteChat("Deleting Chat...",{chatId})
   }
 
+  //immediately navigate to home after action
   useEffect(()=>{
     if(deleteChatData || leaveGroupData){
       navigate("/")
     }
   },[deleteChatData,leaveGroupData])
+
   return (
     <Menu open={isDeleteMenu} onClose={closeHandler} anchorEl={deleteOptionAnchor.current} anchorOrigin={{
       vertical: "bottom", horizontal: "right"
@@ -45,14 +52,18 @@ const DeleteChatDialog = ({dispatch,deleteOptionAnchor}) => {
       }} direction={'row'} alignItems={'center'} spacing={'0.5rem'} onClick={selectedDeleteChat.groupChat? leaveGroupHandler : deleteChatHandler}>
         {
           selectedDeleteChat.groupChat? (
-            <> <ExitToApp/>
-              <Typography>
-                <span className='nes-text' style={{fontSize: '0.5rem'}}>Leave Group</span></Typography>
+            <> 
+              <ExitToApp/>
+              <span className='nes-text' style={{fontSize: '0.5rem'}}>
+                Leave Group </span>
             </>
-          ): ( <> <Delete/>
-              <Typography>
-              <span className='nes-text' style={{fontSize: '0.5rem'}}>Unfriend</span></Typography>
-              </> )
+          ): ( 
+            <> 
+              <Delete/>
+              <span className='nes-text' style={{fontSize: '0.5rem'}}>
+                Unfriend  </span>
+            </> 
+          )
         }
       </Stack>
     </Menu>

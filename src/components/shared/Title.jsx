@@ -13,3 +13,5 @@ const Title = ({
 }
 
 export default Title
+
+//React Helmet- reusable React component will manage all of your changes to the document head

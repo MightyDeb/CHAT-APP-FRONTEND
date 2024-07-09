@@ -3,34 +3,41 @@ import Header from './Header'
 import Title from '../shared/Title'
 import { Drawer, Grid, Skeleton } from '@mui/material'
 import ChatList from '../../specific/ChatList'
-import { sampleChats } from '../../constants/sampleData'
 import { useNavigate, useParams } from 'react-router-dom'
 import Profile from '../../specific/Profile'
 import { useMyChatsQuery } from '../../redux/api/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsDeleteMenu, setIsMobileMenu, setSelectedDeleteChat } from '../../redux/reducers/misc'
 import toast from 'react-hot-toast'
-import { useErrors, useSocketEvents } from '../../hooks/hook'
+import { useSocketEvents } from '../../hooks/hook'
 import { getSocket } from '../../socket'
 import { NEW_MESSAGE_ALERT, NEW_REQUEST, REFETCH_CHATS } from '../../constants/events'
 import { incrementNotifications, setNewMessagesAlert } from '../../redux/reducers/chat'
 import { getOrSaveFromStorage } from '../../lib/features'
 import DeleteChatDialog from '../dialogs/DeleteChatMenu'
+
+
 const AppLayout = ()=>(WrappedComponent)=> {
   return(props)=>{
+    //utility variables
     const params=useParams()
     const navigate= useNavigate()
     const dispatch= useDispatch()
     const deleteMenuAnchor= useRef(null)
-    const chatId= params.chatId
     const socket= getSocket()
+
+    //extract chatId from params
+    const chatId= params.chatId
+    
+    //state redux values
     const {isMobileMenu}= useSelector((state)=> state.misc)
     const {user}= useSelector((state)=> state.auth)
     const {newMessagesAlert}= useSelector((state)=> state.chat)
+
+    //GET my chats (friends+groups)
     const {isLoading,data,isError,error,refetch}= useMyChatsQuery("")
 
-    
-    
+    //error handling of rtk queries
     const errors= [{isError,error}]
     useEffect(()=>{
       errors.forEach(({isError,error})=>{
@@ -40,46 +47,47 @@ const AppLayout = ()=>(WrappedComponent)=> {
       }) 
     },[errors])
 
-    
+    //save and extract no. of new messages in local storage to prevent loss while refreshing
     useEffect(()=>{
       getOrSaveFromStorage({key: NEW_MESSAGE_ALERT, value: newMessagesAlert})
     },[newMessagesAlert])
 
+
     const handleDeleteChat=(e,chatId,groupChat)=>{
       dispatch(setIsDeleteMenu(true))
       dispatch(setSelectedDeleteChat({chatId,groupChat}))
-      deleteMenuAnchor.current= e.currentTarget
-      
+      deleteMenuAnchor.current= e.currentTarget 
     }
     const handleMobileClose=()=>{
       dispatch(setIsMobileMenu(false))
     }
 
+    //event listeners for Sokcet Events using useCallback() hook
     const newMessageAlertHandler= useCallback((data)=>{
-      if(data.chatId === chatId) return
+      if(data.chatId === chatId) 
+        return
       dispatch(setNewMessagesAlert(data))
     },[])
     const newRequestHandler= useCallback(()=>{
       dispatch(incrementNotifications())
     },[dispatch])
     const refetchListener= useCallback((data)=>{
-      refetch()
+      refetch()      //refetch
       navigate("/")
     },[refetch,navigate])
     
     const eventHandlers= { 
       [NEW_MESSAGE_ALERT]: newMessageAlertHandler, [NEW_REQUEST]: newRequestHandler, [REFETCH_CHATS]: refetchListener
     }
+
+    //utilising socket.io events for real time interaction
     useSocketEvents(socket, eventHandlers)
-
-    
-
+    console.log(data?.chats)
     return(
       <div>
         <Title/>
         <Header/>
-        {/* Accoring to M-UI, screen is divided into 12 grids. */}
-        <DeleteChatDialog dispatch={dispatch} deleteOptionAnchor={deleteMenuAnchor}/>
+        <DeleteChatDialog deleteOptionAnchor={deleteMenuAnchor}/>
         {
           isLoading? <Skeleton/> : (
             <Drawer open={isMobileMenu} onClose={handleMobileClose}>
@@ -91,11 +99,9 @@ const AppLayout = ()=>(WrappedComponent)=> {
           <Grid item sm={4} md={3} sx={{
             display: {xs:'none',sm:'block'},
             }} height={'90.5vh'} >
-              {isLoading ? (<Skeleton/>) :
-              <> 
-            <ChatList chats={data?.chats} chatId={chatId} newMessagesAlert={newMessagesAlert} handleDeleteChat={handleDeleteChat} />
-             </>
-             }
+              {isLoading ? <Skeleton/> :   
+                <ChatList chats={data?.chats} chatId={chatId} newMessagesAlert={newMessagesAlert} handleDeleteChat={handleDeleteChat} />
+              }
           </Grid>
           <Grid item xs={12} sm={8} md={5} lg={6}height={'90.5vh'} >
             <WrappedComponent {...props} chatId={chatId} user={user}/>
@@ -107,8 +113,6 @@ const AppLayout = ()=>(WrappedComponent)=> {
             <Profile user={user}/>
           </Grid>
         </Grid>
-
-
       </div>
     )
   } 

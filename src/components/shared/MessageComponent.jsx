@@ -13,12 +13,16 @@ const MessageComponent = ({message,user}) => {
     <motion.div 
       initial={{opacity: 0, x: "-100%"}}
       whileInView={{opacity: 1, x: 0}}
-    style={{
-      alignSelf: sameSender?'flex-end':'flex-start',
-      backgroundColor: 'white', color: 'black', borderRadius: '5px', padding: '0.5rem', width: 'fit-content', border: '0.1px solid black'
-    }}>
+      style={{
+        alignSelf: sameSender?'flex-end':'flex-start',
+        backgroundColor: sameSender?'lightgreen':'white', color: 'black', borderRadius: '5px', padding: '0.5rem', width: 'fit-content', border: '0.1px solid black'
+      }}
+    >
       {
-        !sameSender && <Typography color={'#2694ab'} fontWeight={'600'} variant='caption'>{sender.name}</Typography>
+        !sameSender && 
+        <Typography color={'#2694ab'} fontWeight={'700'} variant='caption'>
+          {sender.name}
+        </Typography>
       }
       {
         content && <Typography>{content}</Typography>

@@ -1,8 +1,8 @@
 import React from 'react'
 import AppLayout from '../components/layout/AppLayout'
 import { Box, Typography } from '@mui/material'
-import background from '../constants/middle.webp'
-import mascot from '../constants/mascot.png'
+import background from '../constants/Images/homeBg.webp'
+import mascot from '../constants/Images/mascot.png'
 const Home = () => {
   return (
     <Box sx={{

@@ -1,5 +1,5 @@
 import React from 'react'
-import image from '../constants/dance-dancing-duck.gif'
+import image from '../constants/Images/dance-dancing-duck.gif'
 const NotFound = () => {
   return (
     <div style={{

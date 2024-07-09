@@ -1,8 +1,8 @@
 import { AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import "@fontsource/press-start-2p"
-import React, {Suspense, lazy, useCallback, useEffect, useState} from 'react'
-import navLogo from '../../constants/navlogo.png'
-import { Add, Edit, Group, ImportContacts, Logout, Menu, Notifications, Search } from '@mui/icons-material'
+import React, {Suspense, lazy, useEffect} from 'react'
+
+import { Add, Group, ImportContacts, Logout, Menu, Notifications, Search } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { server } from '../../constants/config'
@@ -10,27 +10,31 @@ import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { userNotExists } from '../../redux/reducers/auth'
 import { setIsMobileMenu, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc'
-import { incrementNotifications, resetNotifications } from '../../redux/reducers/chat'
+import { resetNotifications } from '../../redux/reducers/chat'
 import { getSocket } from '../../socket'
 import { NEW_REQUEST } from '../../constants/events'
+import { getOrSaveFromStorage } from '../../lib/features'
 
 const SearchDialog= lazy(()=> import('../../specific/Search'))
 const NotificationDialog= lazy(()=> import('../../specific/Notifications'))
 const NewGroupDialog= lazy(()=> import('../../specific/NewGroup'))
 
 
-
-
 const Header = () => {
-  
+  //utitlity variables
   const navigate= useNavigate()
   const dispatch= useDispatch()
   const socket= getSocket()
+  //redux state
   const {isSearch,isNotification,isNewGroup}= useSelector(state=> state.misc)
   const {notificationCount}= useSelector(state=> state.chat)
 
-  
+  //save and extract no. of requests in local storage to prevent loss while refreshing
+  useEffect(()=>{
+    getOrSaveFromStorage({key: NEW_REQUEST, value: notificationCount})
+  },[notificationCount])
 
+  //handlers
   const handleMobile=()=>{
     dispatch(setIsMobileMenu(true))
   }
@@ -44,14 +48,12 @@ const Header = () => {
     dispatch(setIsNotification(true))
     dispatch(resetNotifications())
   }
-  const navigateToGroup=()=>{navigate("/groups")}
-
-
+  const navigateToGroup=()=>{
+    navigate("/groups")
+  }
   const getAllCommunitiesHandler=()=>{
     navigate("/communities")
   }
-  const editProfileHandler=()=>{}
-
   const logoutHandler= async()=>{
     try {
       const {data}= await axios.get(`${server}/api/v1/user/logout`,{withCredentials: true})
@@ -69,17 +71,16 @@ const Header = () => {
           bgcolor: '#2E8B57',
         }}>
           <Toolbar >
-            <Typography variant='h6' sx={{
+            <Typography  sx={{
               display: {xs: 'none', sm: 'block'},
-            }}  >
+            }}>
               <h4 className="nes-text" >
-                Chit_Chat
-            </h4>
+                Chit...Chat
+              </h4>
             </Typography>
             <Box sx={{display:{xs: 'block', sm: 'none'}}}>
               <IconButton color='inherit' onClick={handleMobile}>
                 <Menu/>
-
               </IconButton>
             </Box>
             <Box sx={{flexGrow: 1,}}/>
@@ -89,17 +90,17 @@ const Header = () => {
                 <Suspense fallback={<Backdrop open/>}><SearchDialog/></Suspense>
             }
              <Tooltip title='Search'>
-             <IconButton color='inherit' size="large" onClick={openSearchDialog}><Search/></IconButton>
+              <IconButton color='inherit' size="large" onClick={openSearchDialog}> <Search/> </IconButton>
             </Tooltip> 
             {
               isNewGroup && 
                 <Suspense fallback={<Backdrop open/>}><NewGroupDialog/></Suspense>
             }
             <Tooltip title='New Group'>
-            <IconButton color='inherit' size="large" onClick={openNewGroup}><Add/></IconButton>
+              <IconButton color='inherit' size="large" onClick={openNewGroup}><Add/></IconButton>
             </Tooltip> 
             <Tooltip title='Manage Groups'>
-            <IconButton color='inherit' size="large" onClick={navigateToGroup}><Group/></IconButton>
+              <IconButton color='inherit' size="large" onClick={navigateToGroup}><Group/></IconButton>
             </Tooltip>
             <Tooltip title='All Communities'>
               <IconButton color='inherit' size='large' onClick={getAllCommunitiesHandler}><ImportContacts/></IconButton>
@@ -109,15 +110,17 @@ const Header = () => {
                 <Suspense fallback={<Backdrop open/>}><NotificationDialog/></Suspense>
             }
             <Tooltip title='Notifications'>
-            <IconButton color='inherit' size="large" onClick={openNotification}>
-              <Badge badgeContent={notificationCount} color="error"><Notifications/></Badge>
-            </IconButton>
+              <IconButton color='inherit' size="large" onClick={openNotification}>
+                <Badge badgeContent={notificationCount} color="error">
+                  <Notifications/>
+                </Badge>
+              </IconButton>
             </Tooltip>
             <Tooltip title='Logout'>
-            <IconButton color='inherit' size="large" onClick={logoutHandler}><Logout/></IconButton>
+              <IconButton color='inherit' size="large" onClick={logoutHandler}><Logout/></IconButton>
             </Tooltip>        
             </Box>
-            </Toolbar>
+          </Toolbar>
         </AppBar>
       </Box>
     </div>

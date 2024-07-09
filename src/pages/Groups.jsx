@@ -1,7 +1,7 @@
 import { Add, Delete, Done, Edit, KeyboardBackspace, Menu } from '@mui/icons-material'
 import { Grid, IconButton, Tooltip, Box, Drawer, Stack, Typography, TextField, Button, Backdrop, CircularProgress } from '@mui/material'
 import React, { Suspense, lazy, memo, useEffect, useState } from 'react'
-import groupBg from '../constants/groupBg.jpg'
+import groupBg from '../constants/Images/groupBg.jpg'
 import { useNavigate,useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Link } from '../components/styles/StyledComponents'
