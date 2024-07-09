@@ -74,7 +74,7 @@ const Header = () => {
             <Typography  sx={{
               display: {xs: 'none', sm: 'block'},
             }}>
-              <h4 className="nes-text" >
+              <h4 className="nes-text" onClick={()=>{ navigate("/") }}>
                 Chit...Chat
               </h4>
             </Typography>

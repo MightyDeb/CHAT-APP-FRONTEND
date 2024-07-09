@@ -9,8 +9,6 @@ import { userExists, userNotExists } from './redux/reducers/auth'
 import { LayoutLoader } from './components/layout/Loaders'
 import {SocketProvider} from './socket'
 
-
-
 const Home= lazy(()=> import("./pages/Home"))
 const Login= lazy(()=> import("./pages/Login"))
 const Register= lazy(()=> import('./pages/Register'))
@@ -18,7 +16,6 @@ const Chat= lazy(()=> import("./pages/Chat"))
 const Groups= lazy(()=> import("./pages/Groups"))
 const NotFound= lazy(()=> import("./pages/NotFound"))
 const Community= lazy(()=> import("./pages/Community"))
-
 
 const App = () => {
   const {user,loader} = useSelector(state=> state.auth)

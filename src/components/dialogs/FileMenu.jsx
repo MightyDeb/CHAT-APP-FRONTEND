@@ -1,4 +1,4 @@
-import { IconButton, ListItemText, Menu, MenuItem, MenuList, Tooltip } from '@mui/material'
+import {ListItemText, Menu, MenuItem, MenuList, Tooltip } from '@mui/material'
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsFileMenu, setUploadingLoader } from '../../redux/reducers/misc'

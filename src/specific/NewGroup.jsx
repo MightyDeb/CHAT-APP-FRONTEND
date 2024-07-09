@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Dialog, DialogTitle,  Skeleton,  Stack, TextField, Typography} from '@mui/material'
-import { sampleUsers } from '../constants/sampleData'
 import UserItem from '../components/shared/UserItem'
 import { useInputValidation } from '6pp'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,9 +10,12 @@ import { useAsyncMutation } from '../hooks/hook'
 
 const NewGroup = () => {
   const dispatch= useDispatch()
+
   const {isNewGroup}= useSelector(state=> state.misc)
+
   const {isError,isLoading,error,data}= useAvailableFriendsQuery()
   const [newGroup,isLoadingNewGroup]= useAsyncMutation(useNewGroupMutation)
+  
   const groupName= useInputValidation('')
   
   const [selectedMembers,setSelectedMembers]= useState([])
@@ -26,8 +28,6 @@ const NewGroup = () => {
       }
     }) 
   },[errors])
-
-
 
   const selectMemberHandler=(id)=>{
     setSelectedMembers(prev=> prev.includes(id)? prev.filter((i)=> i!==id) :[...prev,id])

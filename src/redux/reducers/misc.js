@@ -8,7 +8,9 @@ const initialState={
   isSearch: false,
   isFileMenu: false,
   isDeleteMenu: false,
+  isOpenProfile: false,
   uploadingLoader: false,
+  seeProfileOf: "",
   selectedDeleteChat: {
     chatId: "",
     groupChat: false
@@ -34,6 +36,9 @@ const miscSlice= createSlice({
     setIsSearch: (state,action)=>{
       state.isSearch= action.payload
     },
+    setIsOpenProfile: (state,action)=>{
+      state.isOpenProfile= action.payload
+    },
     setIsFileMenu: (state,action)=>{
       state.isFileMenu= action.payload
     },
@@ -45,7 +50,10 @@ const miscSlice= createSlice({
     },
     setSelectedDeleteChat: (state,action)=>{
       state.selectedDeleteChat= action.payload
-    }
+    },
+    setSeeProfileOf: (state,action)=>{
+      state.seeProfileOf= action.payload
+    },
   }
 })
 
@@ -55,7 +63,8 @@ setIsAddMember,
 setIsNotification,
 setIsMobileMenu,
 setIsSearch,
+setIsOpenProfile,
 setIsFileMenu,
 setIsDeleteMenu,
 setUploadingLoader,
-setSelectedDeleteChat} = miscSlice.actions
+setSelectedDeleteChat,setSeeProfileOf} = miscSlice.actions

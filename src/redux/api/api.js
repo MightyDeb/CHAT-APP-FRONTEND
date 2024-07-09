@@ -1,4 +1,4 @@
-
+//rtk queries
 
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import { server } from '../../constants/config'
@@ -147,9 +147,14 @@ const api= createApi({
         url: "chat/community", credentials: 'include'
       }),
       providesTags: ["Chat"]
-    })
+    }),
+    userProfile: builder.query({
+      query: ({userId})=>({
+        url: `user/userprofile/${userId}`, credentials: 'include'
+      }),
+    }),
   })
 })
 
 export default api
-export const {useMyChatsQuery,useLazySearchUserQuery,useSendFriendRequestMutation,useGetNotificationsQuery,useAcceptFriendRequestMutation,useChatDetailsQuery,useGetMessagesQuery,useSendAttachmentsMutation,useMyGroupsQuery,useAvailableFriendsQuery,useNewGroupMutation,useRenameGroupMutation,useRemoveGroupMemberMutation,useAddGroupMembersMutation,useDeleteChatMutation,useLeaveGroupMutation,useCommunitiesQuery} = api
+export const {useMyChatsQuery,useLazySearchUserQuery,useSendFriendRequestMutation,useGetNotificationsQuery,useAcceptFriendRequestMutation,useChatDetailsQuery,useGetMessagesQuery,useSendAttachmentsMutation,useMyGroupsQuery,useAvailableFriendsQuery,useNewGroupMutation,useRenameGroupMutation,useRemoveGroupMemberMutation,useAddGroupMembersMutation,useDeleteChatMutation,useLeaveGroupMutation,useCommunitiesQuery,useUserProfileQuery} = api

@@ -11,7 +11,7 @@ const Community = () => {
   const navigate= useNavigate()
   const dispatch= useDispatch()
   const myCommunities= useCommunitiesQuery("")
-  console.log(myCommunities?.data)
+  
   const errors= [{isError: myCommunities.isError, error: myCommunities.error}]
   useEffect(()=>{
     errors.forEach(({isError,error})=>{
@@ -72,7 +72,7 @@ const Community = () => {
           }}>Created by {i.creator.name}</span>
             </Grid>
           <Grid item xs={2}>
-          <img src={i.creator.avatar.url} width={50} style={{borderRadius: '50%'}}/>
+          <img src={i.creator.avatar.url} width={30} height={30} style={{borderRadius: '50%'}}/>
           </Grid>
           
           </Grid>

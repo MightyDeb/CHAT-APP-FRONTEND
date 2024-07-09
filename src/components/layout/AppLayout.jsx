@@ -82,7 +82,7 @@ const AppLayout = ()=>(WrappedComponent)=> {
 
     //utilising socket.io events for real time interaction
     useSocketEvents(socket, eventHandlers)
-    console.log(data?.chats)
+    
     return(
       <div>
         <Title/>

@@ -25,7 +25,7 @@ const ChatItem = ({
           color: sameSender? 'white': 'unset',
           position: 'relative',
         }}>
-        <AvatarCard avatar={avatar} onClick={openProfileDialog}/>
+        <AvatarCard key={Math.random()*100} avatar={avatar} onClick={openProfileDialog}/>
         <Stack>
           <p style={{fontSize: '0.7rem'}}>
             {name}

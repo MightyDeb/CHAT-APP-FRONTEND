@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import {Dialog, DialogTitle, InputAdornment, List, ListItemText, Stack, TextField} from '@mui/material'
+import {Dialog, DialogTitle, InputAdornment, List,  Stack, TextField} from '@mui/material'
 import {useInputValidation} from '6pp'
 import {Search} from '@mui/icons-material'
 import UserItem from '../components/shared/UserItem'
-import { sampleUsers } from '../constants/sampleData'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsSearch } from '../redux/reducers/misc'
 import { useLazySearchUserQuery, useSendFriendRequestMutation } from '../redux/api/api'
 import toast from 'react-hot-toast'
-import axios from 'axios'
-
 
 const SearchDialog = () => {
   const dispatch= useDispatch()
+
   const {isSearch}= useSelector((state)=> state.misc)
+
   const [searchUser]= useLazySearchUserQuery()
   const [sendFriendRequest]= useSendFriendRequestMutation()
   const search= useInputValidation("");
   const [users,setUsers]= useState([])
-  let isLoadingSendFriendRequest= false
 
   const addFriendHandler= async(id)=>{
     try {
@@ -68,7 +66,7 @@ const SearchDialog = () => {
         }}/>
         <List>
           {users.map((user)=>
-            <UserItem user={user} key={user._id} handler={addFriendHandler} handlerIsLoading={isLoadingSendFriendRequest}/>
+            <UserItem user={user} key={user._id} handler={addFriendHandler} />
           )}
         </List>
       </Stack>

@@ -1,29 +1,25 @@
 import React, { memo } from 'react'
 import {Avatar, Button, Dialog, DialogTitle, ListItem, Skeleton, Stack, Typography} from '@mui/material'
-import { sampleNotifications } from '../constants/sampleData'
 import { useAcceptFriendRequestMutation, useGetNotificationsQuery } from '../redux/api/api'
-import { useAsyncMutation, useErrors } from '../hooks/hook'
+import { useAsyncMutation } from '../hooks/hook'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsNotification } from '../redux/reducers/misc'
-import toast from 'react-hot-toast'
 
 const Notifications = () => {
   const dispatch= useDispatch()
+
   const {isNotification}= useSelector(state=> state.misc)
 
-  const {isLoading,data,error,isError}= useGetNotificationsQuery()
-
+  const {isLoading,data}= useGetNotificationsQuery()
   const [acceptRequest]= useAsyncMutation(useAcceptFriendRequestMutation)
 
   const friendRequestHandler= async({_id,accept})=>{
     dispatch(setIsNotification(false))
     await acceptRequest("Processing Friend Request...",{requestId: _id, accept})
   }
-
   const closeHandler =()=>{
     dispatch(setIsNotification(false))
   }
-  useErrors([{error,isError}])
 
   return (
     <Dialog open={isNotification} onClose={closeHandler}>

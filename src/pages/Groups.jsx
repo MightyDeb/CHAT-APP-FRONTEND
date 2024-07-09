@@ -126,8 +126,8 @@ const Groups = () => {
     : (<>
       <Typography variant='h4'>
         <span className='nes-text' style={{
-          fontSize: '1.6rem'
-        }}>{groupName}</span></Typography>
+          fontSize: '1.3rem'
+        }}>{groupName.length>7 ? groupName.substring(0,5)+"..." : groupName}</span></Typography>
       <IconButton onClick={()=> setIsEdit(true)} disabled={isLoadingGroupName}><Edit/></IconButton>
     </>) }    
   </Stack>
@@ -154,7 +154,7 @@ const Groups = () => {
         {groupName && 
         <>
           {GroupName}
-          <Typography margin={'2rem'} alignSelf={'flex-start'} variant='body1'>
+          <Typography margin={'0.5rem'} alignSelf={'flex-start'} variant='body1'>
             <p className='nes-text'>MEMBERS</p>
           </Typography>
           <Stack maxWidth={'45rem'} width={'100%'} boxsizzing={'border-box'} padding={{ sm: '1rem', xs: '0', md: '1rem 4rem'}} spacing={'2rem'} height={'50vh'} overflow={'auto'}>
