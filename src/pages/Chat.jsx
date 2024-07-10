@@ -7,7 +7,7 @@ import FileMenu from '../components/dialogs/FileMenu'
 import Picker from '@emoji-mart/react'
 import data  from '@emoji-mart/data'
 import MessageComponent from '../components/shared/MessageComponent'
-import { getSocket } from '../socket'
+import { GetSocket } from '../socket'
 import { ALERT, NEW_MESSAGE, START_TYPING, STOP_TYPING } from '../constants/events'
 import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api/api'
 import { useSocketEvents } from '../hooks/hook'
@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom'
 const Chat = ({chatId, user}) => {
   const containerRef= useRef(null)
   const bottomRef= useRef(null)
-  const socket= getSocket()
+  const socket= GetSocket()
   const dispatch= useDispatch()
   const navigate= useNavigate()
   const [messages,setMessages]= useState([])
@@ -56,7 +56,6 @@ const Chat = ({chatId, user}) => {
   }
   const onEmojiClick= (e)=>{
     setMessage(prev=> prev.concat(e.native))
-    setShowPicker(false)
   }
 
   const handleFileOpen = (e)=>{

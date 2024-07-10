@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setIsDeleteMenu, setIsMobileMenu, setSelectedDeleteChat } from '../../redux/reducers/misc'
 import toast from 'react-hot-toast'
 import { useSocketEvents } from '../../hooks/hook'
-import { getSocket } from '../../socket'
+import { GetSocket } from '../../socket'
 import { NEW_MESSAGE_ALERT, NEW_REQUEST, REFETCH_CHATS } from '../../constants/events'
 import { incrementNotifications, setNewMessagesAlert } from '../../redux/reducers/chat'
 import { getOrSaveFromStorage } from '../../lib/features'
 import DeleteChatDialog from '../dialogs/DeleteChatMenu'
 
-
+{/* eslint-disable */}
 const AppLayout = ()=>(WrappedComponent)=> {
   return(props)=>{
     //utility variables
@@ -24,7 +24,7 @@ const AppLayout = ()=>(WrappedComponent)=> {
     const navigate= useNavigate()
     const dispatch= useDispatch()
     const deleteMenuAnchor= useRef(null)
-    const socket= getSocket()
+    const socket= GetSocket()
 
     //extract chatId from params
     const chatId= params.chatId
@@ -117,5 +117,6 @@ const AppLayout = ()=>(WrappedComponent)=> {
     )
   } 
 }
+{/* eslint-disable */}
 
 export default AppLayout

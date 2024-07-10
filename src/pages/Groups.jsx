@@ -6,7 +6,6 @@ import { useNavigate,useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { Link } from '../components/styles/StyledComponents'
 import AvatarCard from '../components/shared/AvatarCard'
-import { sampleChats, sampleUsers } from '../constants/sampleData'
 import UserItem from '../components/shared/UserItem'
 import { useAddGroupMembersMutation, useChatDetailsQuery, useDeleteChatMutation, useMyGroupsQuery, useRemoveGroupMemberMutation, useRenameGroupMutation } from '../redux/api/api'
 import { LayoutLoader } from '../components/layout/Loaders'
@@ -46,17 +45,12 @@ const Groups = () => {
     }) 
   },[errors])
 
+
   useEffect(()=>{
     if(groupDetails.data){
       setGroupName(groupDetails.data?.chat?.name)
       setGroupNameUpdatedValue(groupDetails.data?.chat?.name)
       setMembers(groupDetails.data?.chat?.members)
-    }
-    return ()=>{
-      setGroupName(""),
-      setGroupNameUpdatedValue(""),
-      setMembers([]),
-      setIsEdit(false)
     }
   },[groupDetails])
   

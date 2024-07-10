@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userNotExists } from '../../redux/reducers/auth'
 import { setIsMobileMenu, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc'
 import { resetNotifications } from '../../redux/reducers/chat'
-import { getSocket } from '../../socket'
+import { GetSocket } from '../../socket'
 import { NEW_REQUEST } from '../../constants/events'
 import { getOrSaveFromStorage } from '../../lib/features'
 
@@ -24,7 +24,7 @@ const Header = () => {
   //utitlity variables
   const navigate= useNavigate()
   const dispatch= useDispatch()
-  const socket= getSocket()
+  const socket= GetSocket()
   //redux state
   const {isSearch,isNotification,isNewGroup}= useSelector(state=> state.misc)
   const {notificationCount}= useSelector(state=> state.chat)

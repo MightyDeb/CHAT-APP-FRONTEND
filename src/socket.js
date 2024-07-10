@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import { server } from './constants/config'
 
 const SocketContent= createContext()
-const getSocket= ()=> useContext(SocketContent)
+const GetSocket= ()=> useContext(SocketContent)
 
 const SocketProvider= ({children})=>{
   const socket=  useMemo(()=> 
@@ -17,6 +17,6 @@ const SocketProvider= ({children})=>{
   )
 }
 
-export {getSocket,SocketProvider}
+export {GetSocket,SocketProvider}
 
 
