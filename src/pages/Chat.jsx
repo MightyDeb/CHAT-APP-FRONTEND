@@ -2,10 +2,10 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import chatBg from '../constants/Images/chatBg.jpg'
 import AppLayout from '../components/layout/AppLayout'
 import { IconButton, Skeleton, Stack } from '@mui/material'
-import { AttachFile, Send } from '@mui/icons-material'
-import { InputBox } from '../components/styles/StyledComponents'
+import { AttachFile, EmojiEmotions, Send } from '@mui/icons-material'
 import FileMenu from '../components/dialogs/FileMenu'
-
+import Picker from '@emoji-mart/react'
+import data  from '@emoji-mart/data'
 import MessageComponent from '../components/shared/MessageComponent'
 import { getSocket } from '../socket'
 import { ALERT, NEW_MESSAGE, START_TYPING, STOP_TYPING } from '../constants/events'
@@ -21,13 +21,13 @@ import { useNavigate } from 'react-router-dom'
 
 const Chat = ({chatId, user}) => {
   const containerRef= useRef(null)
-  const fileMenuRef= useRef(null)
   const bottomRef= useRef(null)
   const socket= getSocket()
   const dispatch= useDispatch()
   const navigate= useNavigate()
   const [messages,setMessages]= useState([])
   const [message,setMessage]= useState("")
+  const [showPicker, setShowPicker]= useState(false)
   const [page,setPage]= useState(1)
   const [fileMenuAnchor, setFileMenuAnchor]= useState(null)
   const [IamTyping,setIamTyping]= useState(false)
@@ -53,6 +53,10 @@ const Chat = ({chatId, user}) => {
       socket.emit(STOP_TYPING, {members,chatId})
       setIamTyping(false)
     }, [2000])
+  }
+  const onEmojiClick= (e)=>{
+    setMessage(prev=> prev.concat(e.native))
+    setShowPicker(false)
   }
 
   const handleFileOpen = (e)=>{
@@ -157,7 +161,9 @@ const Chat = ({chatId, user}) => {
           }} onClick={handleFileOpen}>
             <AttachFile/>
           </IconButton>
-          <InputBox placeholder='Type message here...' value={message} onChange={messageOnChange} />
+          <input style={{width: '100%', height: '100%', border: 'none', outline: 'none',borderRadius: '1.5rem', backgroundColor: 'rgba(247,247,247,0.7)'}} placeholder='Type message here...' value={message} onChange={messageOnChange}/>
+          {showPicker && <Picker onEmojiSelect={onEmojiClick} data={data} previewPosition='none'/>}
+          <button type='button' onClick={()=> setShowPicker(prev=> !prev)}><EmojiEmotions color='inherit'/></button>
           <IconButton type='submit' sx={{ backgroundColor: '#ea7070',color:'white',marginLeft: '1rem',padding:'0.5rem','&:hover':{bgcolor:'error.dark',rotate:'-10deg',}
           }}>
             <Send/>
